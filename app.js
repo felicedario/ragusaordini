@@ -2,7 +2,7 @@
 // CONFIGURAZIONE
 // ==========================================================
 // !! IMPORTANTE !! Sostituisci questa stringa con l'URL della tua Web App
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxa60SGL3FRKr4H8oNQKtA4bgn6nqbZ3bqKm84Hu3p60RtnZUnayvaSSUh7UBAWKIi-/exec'; // <-- SOSTITUISCI QUESTO
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxrZdb0wMfEvj1TJN7WoXDJBS3dfBNQAxO-YpPE6Z00XNfIWopxJkkeVUanp0ghBTNa/exec'; // <-- SOSTITUISCI QUESTO
 
 const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
@@ -382,9 +382,24 @@ function generateAffettatriceHtml(data) {
         <tr data-item-name="${item.article}" data-item-category="affettatrice">
             <td><img src="${item.imageUrl}" alt="${item.article}" onerror="this.style.display='none'"></td>
             <td>${item.article}</td>
+            <td>${item.price || ''}</td>
             <td><input type="number" name="quantity" value="0" min="0" class="text-center"></td>
-        </tr>`).join('');
-    return `<h2 class="section-title">AFFETTATRICE E TRITACARNE</h2><table class="min-w-full mb-8"><thead><tr><th class="w-[15%]">Immagine</th><th class="w-[70%]">Articolo</th><th class="w-[15%] text-center">Quantità</th></tr></thead><tbody>${rows}</tbody></table>`;
+        </tr>
+    `).join('');
+    return `
+        <h2 class="section-title">AFFETTATRICE E TRITACARNE</h2>
+        <table class="min-w-full mb-8">
+            <thead>
+                <tr>
+                    <th class="w-[15%]">Immagine</th>
+                    <th class="w-[55%]">Articolo</th>
+                    <th class="w-[15%]">Prezzo</th>
+                    <th class="w-[15%] text-center">Quantità</th>
+                </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+        </table>
+    `;
 }
 
 function generateAntinfortunisticaHtml(data) {
@@ -777,6 +792,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
