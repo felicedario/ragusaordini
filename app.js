@@ -419,7 +419,7 @@ function generateAntinfortunisticaHtml(data) {
             <td>${item.price}</td>
             <td><input type="number" name="quantity" value="0" min="0" class="text-center"></td>
         </tr>`).join('');
-    return `<h2 class="section-title">MATERIALE ANTINFORTUNISCO, DI IGIENE E PULIZIA</h2><table class="min-w-full mb-8"><thead><tr><th class="w-[15%]">Immagine</th><th class="w-[20%]">Prodotto</th><th class="w-[15%]">Codice Prodotto</th><th class="w-[25%]">Descrizione</th><th class="w-[10%]">Prezzo</th><th class="w-[15%] text-center">Quantità</th></tr></thead><tbody>${rows}</tbody></table>`;
+    return `<h2 class="section-title">MATERIALE ANTINFORTUNISTICO, DI IGIENE E PULIZIA</h2><table class="min-w-full mb-8"><thead><tr><th class="w-[15%]">Immagine</th><th class="w-[20%]">Prodotto</th><th class="w-[15%]">Codice Prodotto</th><th class="w-[25%]">Descrizione</th><th class="w-[10%]">Prezzo</th><th class="w-[15%] text-center">Quantità</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 function generateRicambiHtml(data) {
@@ -814,3 +814,4 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
