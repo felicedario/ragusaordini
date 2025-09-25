@@ -2,7 +2,7 @@
 // CONFIGURAZIONE
 // ==========================================================
 // !! IMPORTANTE !! Sostituisci questa stringa con l'URL della tua Web App
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbw10BtJoGKzwE-e30jCtfbwDqL1wuNU1cfryiiQuJkYS2rdBo6BO7K1BTbxaJ8wFasp/exec'; // <-- SOSTITUISCI QUESTO
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwTkRDjELto_q2YkC1eRdLDE3OIwXL1hH9LFmqI0RYseaa-OrtA3IqFFWK2o5B16UDX/exec'; // <-- SOSTITUISCI QUESTO
 
 const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
@@ -162,41 +162,45 @@ async function renderApp(data) {
 // FUNZIONI DI GENERAZIONE HTML
 // ==========================================================
 function generateColtelliHtml(products) {
-    if (!products || products.length === 0) return '';
-    const productsHtml = products.map(p => `
-        <tr data-item-code="${p.code}" data-item-name="${p.name}" data-item-category="knives">
-            <td><img src="${p.imageUrl}" alt="${p.name}" onerror="this.style.display='none'"></td>
-            <td class="align-top">
-                <div>${p.name}<br><span class="text-xs text-gray-500 font-mono">cod: ${p.code}</span></div>
-                <div class="mt-2">
-                    <div class="flex flex-col items-start gap-y-2">
-                        ${p.availableColors && p.availableColors.length > 0 ? `
-                        <select name="color_selection" class="text-xs p-1">
-                            <option value="" selected>Scegli colore...</option>
-                            ${p.availableColors.map(c => `<option value="${c}">${c}</option>`).join('')}
-                        </select>` : ''}
-                        ${p.hasSpecialOptions ? `
-                        <div class="flex justify-center items-center space-x-3">
-                            <label class="cursor-pointer">
-                                <input type="checkbox" name="icon_diamond" class="hidden peer">
-                                <svg class="w-6 h-6 text-gray-400 peer-checked:text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a.83.83 0 01-.57-.23l-7-7.22a.83.83 0 010-1.14l7-7.22a.83.83 0 011.14 0l7 7.22a.83.83 0 010 1.14l-7 7.22A.83.83 0 0110 18zm-5.86-8L10 15.68 15.86 10 10 4.32z"/></svg>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="checkbox" name="icon_engraving" class="hidden peer">
-                                <svg class="w-6 h-6 text-gray-400 peer-checked:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z"/></svg>
-                            </label>
-                        </div>` : ''}
-                        <div class="mt-2"><input type="text" name="item_notes" placeholder="Note articolo..." class="text-xs p-1 w-full border rounded-md"></div>
-                    </div>
+    if (!products || products.length === 0) return '';
+    const productsHtml = products.map(p => `
+        <tr data-item-code="${p.code}" data-item-name="${p.name}" data-item-category="knives">
+            <td><img src="${p.imageUrl}" alt="${p.name}" onerror="this.style.display='none'"></td>
+            <td class="align-top">
+                <div>
+                  ${p.name}<br>
+                  <span class="text-xs text-gray-500 font-mono">cod: ${p.code}</span>
+                  ${p.price ? `<br><span class="text-xs text-gray-500 font-mono">prezzo: ${p.price}</span>` : ''}
                 </div>
-            </td>
-            <td><input type="number" name="macelleria" value="0" min="0" class="text-center"></td>
-            <td><input type="number" name="salumeria" value="0" min="0" class="text-center"></td>
-            <td><input type="number" name="gastronomia" value="0" min="0" class="text-center"></td>
-            <td><input type="number" name="ortofrutta" value="0" min="0" class="text-center"></td>
-            <td><input type="number" name="pescheria" value="0" min="0" class="text-center"></td>
-        </tr>`).join('');
-    return `<h2 class="section-title uppercase">Coltelli e Utensili</h2><div class="overflow-x-auto"><table class="min-w-full mb-8"><thead><tr><th class="w-[15%]">Immagine</th><th class="w-[35%]">Articolo</th><th class="text-center">Macelleria</th><th class="text-center">Salumeria</th><th class="text-center">Gastronomia</th><th class="text-center">Ortofrutta</th><th class="text-center">Pescheria</th></tr></thead><tbody>${productsHtml}</tbody></table></div>`;
+                <div class="mt-2">
+                    <div class="flex flex-col items-start gap-y-2">
+                        ${p.availableColors && p.availableColors.length > 0 ? `
+                        <select name="color_selection" class="text-xs p-1">
+                            <option value="" selected>Scegli colore...</option>
+                            ${p.availableColors.map(c => `<option value="${c}">${c}</option>`).join('')}
+                        </select>` : ''}
+                        ${p.hasSpecialOptions ? `
+                        <div class="flex justify-center items-center space-x-3">
+                            <label class="cursor-pointer">
+                                <input type="checkbox" name="icon_diamond" class="hidden peer">
+                                <svg class="w-6 h-6 text-gray-400 peer-checked:text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a.83.83 0 01-.57-.23l-7-7.22a.83.83 0 010-1.14l7-7.22a.83.83 0 011.14 0l7 7.22a.83.83 0 010 1.14l-7 7.22A.83.83 0 0110 18zm-5.86-8L10 15.68 15.86 10 10 4.32z"/></svg>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="checkbox" name="icon_engraving" class="hidden peer">
+                                <svg class="w-6 h-6 text-gray-400 peer-checked:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z"/></svg>
+                            </label>
+                        </div>` : ''}
+                        <div class="mt-2"><input type="text" name="item_notes" placeholder="Note articolo..." class="text-xs p-1 w-full border rounded-md"></div>
+                    </div>
+                </div>
+            </td>
+            <td><input type="number" name="macelleria" value="0" min="0" class="text-center"></td>
+            <td><input type="number" name="salumeria" value="0" min="0" class="text-center"></td>
+            <td><input type="number" name="gastronomia" value="0" min="0" class="text-center"></td>
+            <td><input type="number" name="ortofrutta" value="0" min="0" class="text-center"></td>
+            <td><input type="number" name="pescheria" value="0" min="0" class="text-center"></td>
+        </tr>`).join('');
+    return `<h2 class="section-title uppercase">Coltelli e Utensili</h2><div class="overflow-x-auto"><table class="min-w-full mb-8"><thead><tr><th class="w-[15%]">Immagine</th><th class="w-[35%]">Articolo</th><th class="text-center">Macelleria</th><th class="text-center">Salumeria</th><th class="text-center">Gastronomia</th><th class="text-center">Ortofrutta</th><th class="text-center">Pescheria</th></tr></thead><tbody>${productsHtml}</tbody></table></div>`;
 }
 
 function generateCopriceppoHtml(data) {
@@ -735,6 +739,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
