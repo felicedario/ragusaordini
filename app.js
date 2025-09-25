@@ -2,7 +2,7 @@
 // CONFIGURAZIONE
 // ==========================================================
 // !! IMPORTANTE !! Sostituisci questa stringa con l'URL della tua Web App
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwUaKPlDKHJ6rLbmDDCia3hAk2zu9lJFto6-zPCLbABaz2bA6We8vkk0RelDkz7Fcs0/exec'; // <-- SOSTITUISCI QUESTO
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwkfkpkwI7XujvFKKOGMKB6xod2aS_e0Ug3LkqYogLLEss9BuJyEM4rDZ8-WfyNdW_A/exec'; // <-- SOSTITUISCI QUESTO
 
 const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
@@ -78,7 +78,7 @@ async function fetchAndSyncData() {
         const response = await fetch(`${GAS_API_URL}?action=getAllDataJSON&v=${new Date().getTime()}`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const freshData = await response.json();
-        
+       
         const localData = await getLocalData(DATA_STORE_NAME, 'products');
 
         if (!localData || localData.version !== freshData.version) {
@@ -104,7 +104,7 @@ async function fetchAndSyncData() {
 // ==========================================================
 async function renderApp(data) {
     const appContent = document.getElementById('app-content');
-    
+   
     appContent.innerHTML = `
         <h1 class="text-2xl font-bold uppercase">Modulo d'Ordine – Coltelleria Ragusa Srl</h1>
         <div class="flex justify-center my-4">
@@ -116,7 +116,6 @@ async function renderApp(data) {
             </button>
         </div>
         <form id="orderForm">
-            <!-- Dati Punto Vendita -->
             <div class="mb-4"><label for="puntoVendita" class="block text-sm mb-2 uppercase">Punto vendita:</label><input type="text" id="puntoVendita" name="puntoVendita"></div>
             <div class="mb-4"><label for="recipientEmail" class="block text-sm mb-2 uppercase">Email per l'ordine:</label><input type="email" id="recipientEmail" name="recipientEmail" placeholder="es. ordini@esempio.com" multiple></div>
             <div class="mb-4"><label for="orari" class="block text-sm mb-2 uppercase">Orari:</label><input type="text" id="orari" name="orari"></div>
@@ -124,8 +123,7 @@ async function renderApp(data) {
             <div class="mb-4"><label for="via" class="block text-sm mb-2 uppercase">Via:</label><input type="text" id="via" name="via"></div>
             <div class="mb-4"><label for="citta" class="block text-sm mb-2 uppercase">Città:</label><input type="text" id="citta" name="citta"></div>
             <div class="mb-6"><label for="note" class="block text-sm mb-2 uppercase">Note Generali Ordine:</label><input type="text" id="note" name="note"></div>
-            
-            <!-- Sezioni dinamiche -->
+           
             <div id="dynamic-sections">
                 ${generateColtelliHtml(data.products)}
                 ${generateCopriceppoHtml(data.copriceppoData)}
@@ -141,10 +139,9 @@ async function renderApp(data) {
                 ${generateGastronomiaHtml(data.gastronomiaData)}
                 ${generateNoleggioHtml(data.noleggioData)}
             </div>
-            
-            <!-- Contratto -->
+           
             ${generateContractHtml(data)}
-            
+           
             <button type="submit" id="submitButton"class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md uppercase w-full mt-8 transition-transform transform hover:scale-105">
                 <span id="buttonText">Invia Ordine</span>
                 <span id="loadingSpinner" class="spinner" style="display: none;"></span>
@@ -164,7 +161,7 @@ async function renderApp(data) {
 function generateColtelliHtml(products) {
     if (!products || products.length === 0) return '';
     const productsHtml = products.map(p => `
-        <tr data-item-code="${p.code}" data-item-name="${p.name}" data-item-category="knives">
+        <tr data-item-code="${p.code}" data-item-name="${p.name}" data-item-category="knives" data-item-price="${p.price || ''}">
             <td><img src="${p.imageUrl}" alt="${p.name}" onerror="this.style.display='none'"></td>
             <td class="align-top">
             <div>
@@ -208,7 +205,7 @@ function generateCopriceppoHtml(data) {
     const departments = ['Macelleria', 'Salumeria', 'Gastronomia', 'Ortofrutta', 'Pescheria']; 
     const sections = departments.map(dept => {
         const departmentRowsHtml = data.rows.map(item => `
-            <tr data-item-code="COPRICEPPO-${dept.toUpperCase()}-${item.dimension}" data-item-name="COPRICEPPO ${dept} ${item.dimension}" data-item-category="copriceppo">
+            <tr data-item-code="COPRICEPPO-${dept.toUpperCase()}-${item.dimension}" data-item-name="COPRICEPPO ${dept} ${item.dimension}" data-item-category="copriceppo" data-item-price="${item.price || ''}">
                 <td>${item.dimension}</td>
                 ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase().replace(/ò/g, 'o')}" value="0" min="0" class="text-center"></td>`).join('')}
             </tr>
@@ -324,7 +321,7 @@ function generateTaglieriAvvitareHtml(data, imageUrl) {
 function generateTavoliHtml(data) {
     if (!data || !data.dimensions) return '';
     const rows = data.dimensions.map(item => `
-        <tr data-item-code="TAVOLI-SOLO-VENDITA-${item.dimension.replace(/x/gi, 'X')}" data-item-name="TAVOLI SOLO VENDITA ${item.dimension}" data-item-category="tavoli-solo-vendita">
+        <tr data-item-code="TAVOLI-SOLO-VENDITA-${item.dimension.replace(/x/gi, 'X')}" data-item-name="TAVOLI SOLO VENDITA ${item.dimension}" data-item-category="tavoli-solo-vendita" data-item-price="${item.price || ''}">
             <td>${item.dimension}</td>
             ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase()}" value="0" min="0" class="text-center"></td>`).join('')}
         </tr>
@@ -345,7 +342,7 @@ function generateTavoliHtml(data) {
 function generateCeppiHtml(data) {
     if (!data || !data.dimensions) return '';
     const rows = data.dimensions.map(item => `
-        <tr data-item-code="CEPPI-${item.dimension.replace(/x/gi, 'X')}" data-item-name="CEPPI ${item.dimension}" data-item-category="ceppi">
+        <tr data-item-code="CEPPI-${item.dimension.replace(/x/gi, 'X')}" data-item-name="CEPPI ${item.dimension}" data-item-category="ceppi" data-item-price="${item.price || ''}">
             <td>${item.dimension}</td>
             ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase()}" value="0" min="0" class="text-center"></td>`).join('')}
         </tr>
@@ -372,7 +369,7 @@ function generateUtensiliHtml(data) {
                 <thead><tr><th class="w-[20%]">CODICE PRODOTTO</th><th class="w-[15%]">IMMAGINE</th><th class="w-[30%]">DESCRIZIONI</th><th class="w-[15%]">PREZZO</th><th class="w-[20%] text-center">QUANTITÀ</th></tr></thead>
                 <tbody>
                     ${cat.items.map(item => `
-                    <tr data-item-code="${item.code}" data-item-name="${cat.categoryName} - ${item.description}" data-item-category="utensili-macelleria" data-item-price="${item.price}">
+                    <tr data-item-code="${item.code}" data-item-name="${cat.categoryName} - ${item.description}" data-item-category="utensili-macelleria" data-item-price="${item.price || ''}">
                         <td>${item.code}</td>
                         <td><img src="${item.imageUrl}" alt="Immagine" onerror="this.style.display='none'"></td>
                         <td>${item.description}</td>
@@ -388,7 +385,7 @@ function generateUtensiliHtml(data) {
 function generateAffettatriceHtml(data) {
     if (!data) return '';
     const rows = data.map(item => `
-        <tr data-item-name="${item.article}" data-item-category="affettatrice">
+        <tr data-item-name="${item.article}" data-item-category="affettatrice" data-item-price="${item.price || ''}">
             <td><img src="${item.imageUrl}" alt="${item.article}" onerror="this.style.display='none'"></td>
             <td>${item.article}</td>
             <td>${item.price || ''}</td>
@@ -414,7 +411,7 @@ function generateAffettatriceHtml(data) {
 function generateAntinfortunisticaHtml(data) {
     if (!data) return '';
     const rows = data.map(item => `
-        <tr data-item-name="${item.product} - ${item.description}" data-item-code="${item.code}" data-item-category="antinfortunistica">
+        <tr data-item-name="${item.product} - ${item.description}" data-item-code="${item.code}" data-item-category="antinfortunistica" data-item-price="${item.price || ''}">
             <td><img src="${item.imageUrl}" alt="${item.product}" onerror="this.style.display='none'"></td>
             <td>${item.product}</td>
             <td>${item.code}</td>
@@ -428,7 +425,7 @@ function generateAntinfortunisticaHtml(data) {
 function generateRicambiHtml(data) {
     if (!data) return '';
     const rows = data.map(item => `
-        <tr data-item-name="${item.product} - ${item.size}" data-item-code="${item.code}" data-item-category="ricambi">
+        <tr data-item-name="${item.product} - ${item.size}" data-item-code="${item.code}" data-item-category="ricambi" data-item-price="${item.price || ''}">
             <td><img src="${item.imageUrl}" alt="${item.product}" onerror="this.style.display='none'"></td>
             <td>${item.product}</td>
             <td>${item.code}</td>
@@ -442,7 +439,7 @@ function generateRicambiHtml(data) {
 function generateGastronomiaHtml(data) {
     if (!data) return '';
     const rows = data.map(item => `
-        <tr data-item-name="${item.product}" data-item-code="${item.code}" data-item-category="gastronomia">
+        <tr data-item-name="${item.product}" data-item-code="${item.code}" data-item-category="gastronomia" data-item-price="${item.price || ''}">
             <td><img src="${item.imageUrl}" alt="${item.product}" onerror="this.style.display='none'"></td>
             <td>${item.product}</td>
             <td>${item.code}</td>
@@ -471,8 +468,7 @@ function generateContractHtml(data) {
     <h2 class="section-title">CONTRATTO</h2>
     <div id="contract-section" class="border p-6 rounded-lg space-y-4 text-sm bg-gray-50">
         <div class="flex items-center gap-2 flex-wrap"><span class="font-bold">CONTRATTO N°</span><input type="text" id="contratto_numero" name="contratto_numero" class="contratto-input w-24"><span class="font-bold">DEL</span><input type="text" id="contratto_data" name="contratto_data" class="contratto-input w-32" placeholder="gg/mm/aaaa"></div>
-        
-        <!-- NUOVO CAMPO OPERATORE -->
+       
         <div class="flex items-center gap-2 flex-wrap">
             <span class="font-bold uppercase">Operatore:</span>
             <select id="contratto_operatore" name="contratto_operatore" class="contratto-input flex-grow min-w-[200px]">
@@ -480,8 +476,6 @@ function generateContractHtml(data) {
                 ${operatoriOptions}
             </select>
         </div>
-        <!-- FINE NUOVO CAMPO -->
-        
         <p>CON LA PRESENTE SCRITTURA PRIVATA, DA VALERSI AD OGNI EFFETTO DI LEGGE, TRA I SOTTOSCRITTI:</p>
         <p><strong>1 - COLTELLERIA RAGUSA SRL</strong>, IN PERSONA DEL LEGALE RAPPRESENTANTE RAGUSA PIETRO, NATO A CORLEONE IL 06.09.1977 E RESIDENTE A BISACQUINO IN C/DA CATRINI, ESERCENTE L'ATTIVITÀ DI NOLEGGIO E ASSISTENZA DI STRUMENTI DA PUNTA E DA TAGLIO, CON SEDE IN CHIUSA SCLAFANI - C/DA RIZZA, PARTITA IVA 06680510820, DENOMINATO <strong>PROPONENTE</strong></p>
         <div class="space-y-2">
@@ -535,7 +529,7 @@ async function setupEventListeners() {
 
     // Salvataggio stato
     form.addEventListener('input', saveFormState);
-    
+   
     // Invio
     form.addEventListener('submit', handleFormSubmit);
 
@@ -574,7 +568,7 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
     signaturePad = new SignaturePad(canvas, { backgroundColor: 'rgb(255, 255, 255)' });
-    
+   
     document.getElementById('clear-signature').addEventListener('click', () => signaturePad.clear());
 
     signaturePad.addEventListener("endStroke", () => { saveFormState(); });
@@ -674,7 +668,12 @@ async function handleFormSubmit(e) {
                 }
                 const notesInput = row.querySelector('input[name="item_notes"]') || row.nextElementSibling?.querySelector('input[name="item_notes"]');
                 if (notesInput && notesInput.value.trim()) quantities.nota_articolo = notesInput.value.trim();
-                items.push({ code: row.dataset.itemCode, name: row.dataset.itemName, quantities });
+                items.push({
+                    code: row.dataset.itemCode,
+                    name: row.dataset.itemName,
+                    price: row.dataset.itemPrice, // <-- MODIFICA
+                    quantities
+                });
             }
         } else if (category.startsWith('taglieri')) {
             const dimensionValue = row.querySelector('input[name="dimensione"]')?.value.trim();
@@ -696,7 +695,16 @@ async function handleFormSubmit(e) {
 
                     const notesInput = row.nextElementSibling?.querySelector('input[name="item_notes"]');
                     if (notesInput && notesInput.value.trim()) quantities.nota_articolo = notesInput.value.trim();
-                    items.push({ code: itemCode, name: itemName, quantities });
+                    
+                    // Legge il prezzo dall'input specifico per i taglieri
+                    const priceValue = row.querySelector('input[name="prezzo"]')?.value.trim(); // <-- MODIFICA
+
+                    items.push({
+                        code: itemCode,
+                        name: itemName,
+                        price: priceValue, // <-- MODIFICA
+                        quantities
+                    });
                 }
             }
         } else { // Categorie con quantità singola
@@ -704,7 +712,12 @@ async function handleFormSubmit(e) {
             const qty = qtyInput ? parseInt(qtyInput.value, 10) || 0 : 0;
             if (qty > 0) {
                 quantities = { quantity: qty };
-                items.push({ code: row.dataset.itemCode, name: row.dataset.itemName, quantities });
+                items.push({
+                    code: row.dataset.itemCode,
+                    name: row.dataset.itemName,
+                    price: row.dataset.itemPrice, // <-- MODIFICA
+                    quantities
+                });
             }
         }
     });
@@ -748,7 +761,7 @@ async function handleFormSubmit(e) {
             noteContratto: document.getElementById('contratto_note').value
         }
     };
-    
+   
     try {
         const response = await fetch(`${GAS_API_URL}?action=processOrder`, {
             method: 'POST',
@@ -756,18 +769,18 @@ async function handleFormSubmit(e) {
             headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Evita il preflight CORS
             body: JSON.stringify(formDataObject)
         });
-        
+       
         // A causa della 'no-cors' e del reindirizzamento di GAS, non possiamo leggere la risposta.
         // Assumiamo successo e attendiamo l'email.
         hideLoading();
         showMessage('Richiesta di invio inoltrata! Controlla la tua email per la conferma.', 'success');
-        
+       
         // Svuota il modulo dopo l'invio (se deve essere attivato basta togliere le // da await fino a generate)
         //await setLocalData(FORM_STORE_NAME, 'currentState', {});
         //document.getElementById('orderForm').reset();
         //if (signaturePad) signaturePad.clear();
         //generateAndSetContractNumber();
-        
+       
     } catch (error) {
         hideLoading();
         showMessage('Errore di rete durante l\'invio: ' + error.message, 'error');
