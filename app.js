@@ -254,7 +254,10 @@ function generateTaglieriHtml(data, imageUrl) {
                 <tbody>
                     ${data.rows.map(() => `
                     <tr data-item-category="taglieri" data-department="${dept.toUpperCase()}">
-                        <td><input type="text" name="dimensione" placeholder="Es: 40x30" class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md"></td>
+                        <td>
+                            <input type="text" name="dimensione" placeholder="Es: 40x30" class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md">
+                            <input type="text" name="prezzo" placeholder="Prezzo..." class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md mt-1">
+                        </td>
                         ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase().replace(/ò/g, 'o')}" value="0" min="0" class="text-center text-sm p-1 w-full border rounded-md"></td>`).join('')}
                     </tr>
                     <tr><td colspan="${1 + data.headers.length}" class="notes-cell"><input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md"></td></tr>
@@ -277,7 +280,10 @@ function generateTaglieriGanciHtml(data, imageUrl) {
                 <tbody>
                     ${data.rows.map(() => `
                     <tr data-item-category="taglieri-ganci" data-department="${dept.toUpperCase()}">
-                        <td><input type="text" name="dimensione" placeholder="Es: 40x30" class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md"></td>
+                        <td>
+                            <input type="text" name="dimensione" placeholder="Es: 40x30" class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md">
+                            <input type="text" name="prezzo" placeholder="Prezzo..." class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md mt-1">
+                        </td>
                         ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase()}" value="0" min="0" class="text-center text-sm p-1 w-full border rounded-md"></td>`).join('')}
                     </tr>
                     <tr><td colspan="${1 + data.headers.length}" class="notes-cell"><input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md"></td></tr>
@@ -300,7 +306,10 @@ function generateTaglieriAvvitareHtml(data, imageUrl) {
                 <tbody>
                     ${data.rows.map(() => `
                     <tr data-item-category="taglieri-avvitare" data-department="${dept.toUpperCase()}">
-                        <td><input type="text" name="dimensione" placeholder="Es: 40x30" class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md"></td>
+                        <td>
+                            <input type="text" name="dimensione" placeholder="Es: 40x30" class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md">
+                            <input type="text" name="prezzo" placeholder="Prezzo..." class="text-center text-sm placeholder:text-xs p-1 w-full border rounded-md mt-1">
+                        </td>
                         ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase()}" value="0" min="0" class="text-center text-sm p-1 w-full border rounded-md"></td>`).join('')}
                     </tr>
                     <tr><td colspan="${1 + data.headers.length}" class="notes-cell"><input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md"></td></tr>
@@ -792,6 +801,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
