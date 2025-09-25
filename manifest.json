@@ -1,0 +1,22 @@
+{
+  "name": "Ragusa Ordini",
+  "short_name": "Ragusa Ordini",
+  "description": "App per la gestione degli ordini per Coltelleria Ragusa Srl.",
+  "start_url": "/ragusaordini/",
+  "scope": "/ragusaordini/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/ragusaordini/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/ragusaordini/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

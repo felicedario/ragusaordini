@@ -1,0 +1,199 @@
+body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      box-sizing: border-box;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 1200px;
+      box-sizing: border-box;
+    }
+    h1 {
+      color: #1f2937;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    label {
+      font-weight: 500;
+      color: #374151;
+    }
+    input[type="text"], input[type="number"], input[type="email"], select, textarea {
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.6rem 0.5rem;
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus, input[type="number"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    th, td {
+      padding: 0.8rem 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: middle;
+    }
+    /* Stile per celle note per non avere il bordo inferiore */
+    .notes-cell {
+        border-bottom: none;
+        padding-top: 0.25rem;
+        padding-bottom: 0.75rem;
+    }
+    th {
+      background-color: #f9fafb;
+      color: #4b5563;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+    td img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      border: 1px solid #e5e7eb;
+    }
+    button {
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      padding: 0.8rem 1.5rem;
+      border-radius: 0.75rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      width: 100%;
+      margin-top: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    button:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    button:active {
+      background-color: #1e40af;
+      transform: translateY(0);
+    }
+    .message-box {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1.5rem;
+      text-align: center;
+      font-weight: 500;
+      display: none;
+    }
+    .message-box.success {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+    .message-box.error {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loading-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .department-section {
+      background-color: #f9fafb;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e5e7eb;
+    }
+    .department-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+
+
+
+    /* Stili per il contratto */
+    .contratto-input {
+      border: none;
+      border-bottom: 1px solid #374151;
+      border-radius: 0;
+      padding: 0.1rem 0.2rem;
+      background-color: transparent;
+    }
+    .contratto-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: none;
+    }
+    .signature-pad-container {
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 150px;
+    }
+    .signature-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+
+
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .container { max-width: 95%; }
+      th, td { padding: 0.6rem 0.4rem; font-size: 0.8rem; }
+      td img { width: 60px; height: 60px; }
+      input[type="number"] { padding: 0.4rem; }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 1.5rem; margin: 1rem; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+      thead, tbody, th, td, tr { display: table-row; }
+      th, td { min-width: 70px; }
+      td img { width: 50px; height: 50px; }
+    }

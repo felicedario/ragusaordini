@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ragusa Ordini</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/idb@7/build/umd.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div id="loading-indicator" class="text-center p-8">
+            <h2 class="text-xl font-semibold animate-pulse">Caricamento dati in corso...</h2>
+            <p>Se è il primo avvio potrebbe richiedere qualche istante.</p>
+        </div>
+
+        <div id="app-content" class="hidden">
+            <!-- Il contenuto dell'app, generato da app.js, verrà inserito qui -->
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
