@@ -8,7 +8,7 @@ const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
 const DATA_STORE_NAME = 'appData';
 const FORM_STORE_NAME = 'formState';
-
+F
 
 // ==========================================================
 // GESTIONE DATABASE LOCALE (IndexedDB)
@@ -167,11 +167,10 @@ function generateColtelliHtml(products) {
         <tr data-item-code="${p.code}" data-item-name="${p.name}" data-item-category="knives">
             <td><img src="${p.imageUrl}" alt="${p.name}" onerror="this.style.display='none'"></td>
             <td class="align-top">
-                <div>
-                    ${p.name}<br>
-                    <span class="text-xs text-gray-500 font-mono">cod: ${p.code}</span>
-                    ${p.price ? `<br><span class="text-xs text-gray-500 font-mono">prezzo: ${p.price}</span>` : ''}
-                </div>
+                <div>${p.name}<br><span class="text-xs text-gray-500 font-mono">cod: ${p.code}</span></div>
+                
+                ${p.price ? `<div><span class="text-xs text-gray-500 font-mono">prezzo: ${p.price}</span></div>` : ''}
+
                 <div class="mt-2">
                     <div class="flex flex-col items-start gap-y-2">
                         ${p.availableColors && p.availableColors.length > 0 ? `
@@ -739,6 +738,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
