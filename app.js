@@ -127,7 +127,7 @@ async function renderApp(data) {
             
             <!-- Sezioni dinamiche -->
             <div id="dynamic-sections">
-                ${generateColtelliHtml(data.products)}
+                ${lliHtml(data.products)}
                 ${generateCopriceppoHtml(data.copriceppoData)}
                 ${generateTaglieriHtml(data.taglieriData, data.taglieriImageUrl)}
                 ${generateTaglieriGanciHtml(data.taglieriGanciData, data.taglieriGanciImageUrl)}
@@ -168,9 +168,6 @@ function generateColtelliHtml(products) {
             <td><img src="${p.imageUrl}" alt="${p.name}" onerror="this.style.display='none'"></td>
             <td class="align-top">
                 <div>${p.name}<br><span class="text-xs text-gray-500 font-mono">cod: ${p.code}</span></div>
-                
-                ${p.price ? `<div><span class="text-xs text-gray-500 font-mono">prezzo: ${p.price}</span></div>` : ''}
-
                 <div class="mt-2">
                     <div class="flex flex-col items-start gap-y-2">
                         ${p.availableColors && p.availableColors.length > 0 ? `
@@ -190,6 +187,9 @@ function generateColtelliHtml(products) {
                             </label>
                         </div>` : ''}
                         <div class="mt-2"><input type="text" name="item_notes" placeholder="Note articolo..." class="text-xs p-1 w-full border rounded-md"></div>
+                        
+                        ${p.price ? `<div class="mt-1"><span class="text-xs text-gray-500 font-mono">prezzo: ${p.price}</span></div>` : ''}
+
                     </div>
                 </div>
             </td>
@@ -738,6 +738,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
