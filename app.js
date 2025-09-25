@@ -167,8 +167,12 @@ function generateColtelliHtml(products) {
         <tr data-item-code="${p.code}" data-item-name="${p.name}" data-item-category="knives">
             <td><img src="${p.imageUrl}" alt="${p.name}" onerror="this.style.display='none'"></td>
             <td class="align-top">
-                <div>${p.name}<br><span class="text-xs text-gray-500 font-mono">cod: ${p.code}</span></div>
-                <div class="mt-2">
+            <div>
+            ${p.name}<br>
+            <span class="text-xs text-gray-500 font-mono">cod: ${p.code}</span>
+            ${p.price ? `<br><strong class="text-sm">PREZZO: ${p.price}</strong>` : ''}
+            </div>
+            <div class="mt-2">
                     <div class="flex flex-col items-start gap-y-2">
                         ${p.availableColors && p.availableColors.length > 0 ? `
                         <select name="color_selection" class="text-xs p-1">
@@ -735,6 +739,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
