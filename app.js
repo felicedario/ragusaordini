@@ -2,7 +2,7 @@
 // CONFIGURAZIONE
 // ==========================================================
 // !! IMPORTANTE !! Sostituisci questa stringa con l'URL della tua Web App
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzPjSC33v3xNa4IVjl-lTdDYEAx2hO70WlGy1_Ymv_7gZsVgpgPC_MXgeJv-JhOqrI1/exec'; // <-- SOSTITUISCI QUESTO
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxa60SGL3FRKr4H8oNQKtA4bgn6nqbZ3bqKm84Hu3p60RtnZUnayvaSSUh7UBAWKIi-/exec'; // <-- SOSTITUISCI QUESTO
 
 const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
@@ -313,24 +313,44 @@ function generateTaglieriAvvitareHtml(data, imageUrl) {
 }
 
 function generateTavoliHtml(data) {
-    if (!data) return '';
-    const rows = data.dimensions.map(dim => `
-        <tr data-item-code="TAVOLI-SOLO-VENDITA-${dim.replace(/x/gi, 'X')}" data-item-name="TAVOLI SOLO VENDITA ${dim}" data-item-category="tavoli-solo-vendita">
-            <td>${dim}</td>
+    if (!data || !data.dimensions) return '';
+    const rows = data.dimensions.map(item => `
+        <tr data-item-code="TAVOLI-SOLO-VENDITA-${item.dimension.replace(/x/gi, 'X')}" data-item-name="TAVOLI SOLO VENDITA ${item.dimension}" data-item-category="tavoli-solo-vendita">
+            <td>${item.dimension}</td>
             ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase()}" value="0" min="0" class="text-center"></td>`).join('')}
         </tr>
-        <tr><td colspan="${1 + data.headers.length}" class="notes-cell"><input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md"></td></tr>`).join('');
+        <tr>
+            <td colspan="${1 + data.headers.length}" class="notes-cell">
+                ${item.price ? `
+                    <div class="text-left pb-1">
+                        <strong class="text-sm">PREZZO: ${item.price}</strong>
+                    </div>
+                ` : ''}
+                <input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md">
+            </td>
+        </tr>
+    `).join('');
     return `<h2 class="section-title">TAVOLI - SOLO VENDITA</h2><p class="text-sm text-gray-600 mb-4 text-center">COLORI DISPONIBILI: BIANCO, BORDO', GIALLO, VERDE, AZZURRO. SPECIFICARE PER OGNI ARTICOLO QUANTITA' E COLORE.</p><table class="min-w-full mb-8"><thead><tr><th class="w-[20%]">Dimensioni</th>${data.headers.map(h => `<th class="w-[16%] text-center">${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 function generateCeppiHtml(data) {
-    if (!data) return '';
-    const rows = data.dimensions.map(dim => `
-        <tr data-item-code="CEPPI-${dim.replace(/x/gi, 'X')}" data-item-name="CEPPI ${dim}" data-item-category="ceppi">
-            <td>${dim}</td>
+    if (!data || !data.dimensions) return '';
+    const rows = data.dimensions.map(item => `
+        <tr data-item-code="CEPPI-${item.dimension.replace(/x/gi, 'X')}" data-item-name="CEPPI ${item.dimension}" data-item-category="ceppi">
+            <td>${item.dimension}</td>
             ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase()}" value="0" min="0" class="text-center"></td>`).join('')}
         </tr>
-        <tr><td colspan="${1 + data.headers.length}" class="notes-cell"><input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md"></td></tr>`).join('');
+        <tr>
+            <td colspan="${1 + data.headers.length}" class="notes-cell">
+                ${item.price ? `
+                    <div class="text-left pb-1">
+                        <strong class="text-sm">PREZZO: ${item.price}</strong>
+                    </div>
+                ` : ''}
+                <input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md">
+            </td>
+        </tr>
+    `).join('');
     return `<h2 class="section-title">CEPPI</h2><p class="text-sm text-gray-600 mb-4 text-center">COLORI DISPONIBILI: BIANCO - BORDO'</p><table class="min-w-full mb-8"><thead><tr><th class="w-[20%]">Dimensioni</th>${data.headers.map(h => `<th class="w-[16%] text-center">${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;
 }
 
@@ -757,6 +777,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
