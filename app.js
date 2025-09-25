@@ -215,7 +215,7 @@ function generateCopriceppoHtml(data) {
             <tr>
                 <td colspan="${1 + data.headers.length}" class="notes-cell">
                     ${item.price ? `
-                        <div class="text-right pb-1">
+                        <div class="text-left pb-1">
                             <strong class="text-sm">PREZZO: ${item.price}</strong>
                         </div>
                     ` : ''}
@@ -757,6 +757,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
