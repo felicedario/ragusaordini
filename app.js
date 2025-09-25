@@ -8,7 +8,7 @@ const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
 const DATA_STORE_NAME = 'appData';
 const FORM_STORE_NAME = 'formState';
-F
+
 
 // ==========================================================
 // GESTIONE DATABASE LOCALE (IndexedDB)
@@ -127,7 +127,7 @@ async function renderApp(data) {
             
             <!-- Sezioni dinamiche -->
             <div id="dynamic-sections">
-                ${lliHtml(data.products)}
+                ${generateColtelliHtml(data.products)}
                 ${generateCopriceppoHtml(data.copriceppoData)}
                 ${generateTaglieriHtml(data.taglieriData, data.taglieriImageUrl)}
                 ${generateTaglieriGanciHtml(data.taglieriGanciData, data.taglieriGanciImageUrl)}
@@ -187,9 +187,6 @@ function generateColtelliHtml(products) {
                             </label>
                         </div>` : ''}
                         <div class="mt-2"><input type="text" name="item_notes" placeholder="Note articolo..." class="text-xs p-1 w-full border rounded-md"></div>
-                        
-                        ${p.price ? `<div class="mt-1"><span class="text-xs text-gray-500 font-mono">prezzo: ${p.price}</span></div>` : ''}
-
                     </div>
                 </div>
             </td>
@@ -738,13 +735,6 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
-
-
-
-
-
-
-
 
 
 
