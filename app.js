@@ -2,7 +2,7 @@
 // CONFIGURAZIONE
 // ==========================================================
 // !! IMPORTANTE !! Sostituisci questa stringa con l'URL della tua Web App
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwubZCgwjzKAYAHHxUznR7zqX8nij-CmYK7xjvs0p4m3na8LsW68fzYfoSafnlBfUY5/exec'; // <-- SOSTITUISCI QUESTO
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwEYdxwoyVBqbSaBQF-T1_dwvMhZPtDnmv_s-O7k6BUuB5bl6liipSoSTQScxyM30Ee/exec'; // <-- SOSTITUISCI QUESTO
 
 const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
@@ -204,24 +204,42 @@ function generateColtelliHtml(products) {
 }
 
 function generateCopriceppoHtml(data) {
-    if (!data) return '';
-    const departments = ['Macelleria', 'Salumeria', 'Gastronomia', 'Ortofrutta', 'Pescheria'];
-    const sections = departments.map(dept => `
-        <div class="department-section">
-            <h3 class="department-title uppercase">${dept}</h3>
-            <table>
-                <thead><tr><th class="w-1/3">Dimensione</th>${data.headers.map(h => `<th class="w-1/3 text-center">${h}</th>`).join('')}</tr></thead>
-                <tbody>
-                    ${data.rows.map(size => `
-                    <tr data-item-code="COPRICEPPO-${dept.toUpperCase()}-${size}" data-item-name="COPRICEPPO ${dept} ${size}" data-item-category="copriceppo">
-                        <td>${size}</td>
-                        ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase()}" value="0" min="0" class="text-center"></td>`).join('')}
-                    </tr>
-                    <tr><td colspan="${1 + data.headers.length}" class="notes-cell"><input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md"></td></tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        </div>`).join('');
+    if (!data || !data.rows || data.rows.length === 0) return '';
+    const departments = ['Macelleria', 'Salumeria', 'Gastronomia', 'Ortofrutta', 'Pescheria']; 
+    const sections = departments.map(dept => {
+        const departmentRowsHtml = data.rows.map(item => `
+            <tr data-item-code="COPRICEPPO-${dept.toUpperCase()}-${item.dimension}" data-item-name="COPRICEPPO ${dept} ${item.dimension}" data-item-category="copriceppo">
+                <td>${item.dimension}</td>
+                ${data.headers.map(h => `<td><input type="number" name="${h.toLowerCase().replace(/ò/g, 'o')}" value="0" min="0" class="text-center"></td>`).join('')}
+            </tr>
+            <tr>
+                <td colspan="${1 + data.headers.length}" class="notes-cell">
+                    ${item.price ? `
+                        <div class="text-right pb-1">
+                            <strong class="text-sm">PREZZO: ${item.price}</strong>
+                        </div>
+                    ` : ''}
+                    <input type="text" name="item_notes" placeholder="Note..." class="text-xs p-1 w-full border rounded-md">
+                </td>
+            </tr>
+        `).join('')
+        return `
+            <div class="department-section">
+                <h3 class="department-title uppercase">${dept}</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-1/3">Dimensione</th>
+                            ${data.headers.map(h => `<th class="w-1/3 text-center">${h}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${departmentRowsHtml}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }).join('');
     return `<h2 class="section-title uppercase">Copriceppo</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">${sections}</div>`;
 }
 
@@ -739,6 +757,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
