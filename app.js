@@ -2,7 +2,7 @@
 // CONFIGURAZIONE
 // ==========================================================
 // !! IMPORTANTE !! Sostituisci questa stringa con l'URL della tua Web App
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwfjwvsEFlKWX9K1cyRlVMfbIxtLcYBJkYYL-bYQelYVXJIH44T0hdwrhF6G2muiOcA/exec'; // <-- SOSTITUISCI QUESTO
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwFKBXuNgrxL63iyYUyeNsJbOh2eR_qE0cseKvUSGVSp2fKge3wqHJfCU52lDinHUBa/exec'; // <-- SOSTITUISCI QUESTO
 
 const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
@@ -776,7 +776,7 @@ async function handleFormSubmit(e) {
                 acciaini1: document. getElementById('acciaini_1').value,
             canoneColtelleria1: document.getElementById('contratto_canone_coltelleria_1').value,
             canoneColtelleria2: document.getElementById('contratto_canone_coltelleria_2').value,
-                canoneColtelleria3: document .getElementById('contratto_canone_coltelleria3').value,
+                canoneColtelleria3: document .getElementById('contratto_canone_coltelleria_3').value,
             canoneAcciaini: document.getElementById('contratto_canone_acciaini').value,
                 richiesta1: document. getElementById('richiesta_1').value,
                 richiesta2: document. getElementById('richiesta_2').value,
@@ -844,6 +844,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
