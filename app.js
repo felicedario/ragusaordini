@@ -770,16 +770,16 @@ async function handleFormSubmit(e) {
             domicilioProvincia: document.getElementById('contratto_domicilio_provincia').value,
             pIva: document.getElementById('contratto_partita_iva').value,
             codiceFiscale: document.getElementById('contratto_codice_fiscale').value,
-                lineacoltelleria1: document. getElementById('linea_coltelleria_1').value,
-            lineacoltelleria2: document. getElementById('linea_coltelleria_2').value,
-            lineacoltelleria3: document. getElementById('linea_coltelleria_3').value,
-                acciaini1: document. getElementById('acciaini_1').value,
+                lineacoltelleria1: document.getElementById('linea_coltelleria_1').value,
+            lineacoltelleria2: document.getElementById('linea_coltelleria_2').value,
+            lineacoltelleria3: document.getElementById('linea_coltelleria_3').value,
+                acciaini1: document.getElementById('acciaini_1').value,
             canoneColtelleria1: document.getElementById('contratto_canone_coltelleria_1').value,
             canoneColtelleria2: document.getElementById('contratto_canone_coltelleria_2').value,
-                canoneColtelleria3: document .getElementById('contratto_canone_coltelleria_3').value,
-            canoneAcciaini: document.getElementById('contratto_canone_acciaini').value,
-                richiesta1: document. getElementById('richiesta_1').value,
-                richiesta2: document. getElementById('richiesta_2').value,
+canoneColtelleria3: document.getElementById('contratto_canone_coltelleria_3').value, // <-- CORRETTO
+canoneAcciaini: document.getElementById('contratto_canone_acciaini').value,
+                richiesta1: document.getElementById('richiesta_1').value,
+                richiesta2: document.getElementById('richiesta_2').value,
             versatoMediante: document.getElementById('contratto_versato_mediante').value,
             cadenzaPiallatura: document.getElementById('contratto_cadenza_piallatura').value,
             prezzoPiallatura: document.getElementById('contratto_prezzo_piallatura').value,
@@ -844,6 +844,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
