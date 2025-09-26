@@ -9,7 +9,7 @@ const DB_VERSION = 1;
 const DATA_STORE_NAME = 'appData';
 const FORM_STORE_NAME = 'formState';
 
-
+        
 // ==========================================================
 // GESTIONE DATABASE LOCALE (IndexedDB)
 // ==========================================================
@@ -490,7 +490,26 @@ function generateContractHtml(data) {
         <div class="space-y-2 pl-4">
             <p class="font-bold">1 NOLEGGIO DI ATTREZZATURE</p>
             <p>IL PROPONENTE NOLEGGIA AL SOTTOSCRIVENTE I SEGUENTI BENI MOBILI (VEDI ALLEGATO), CHE SONO NELLA PIENA PROPRIETÀ DELLA DITTA PROPONENTE E SI TROVANO IN PERFETTO STATO DI FUNZIONAMENTO E DI MANUTENZIONE. IL PROPONENTE SI IMPEGNA A RITIRARE E SOSTITUIRE I BENI IN LOCAZIONE AL FINE DI EFFETTUARE LE DOVUTE MANUTENZIONI CON CADENZA PERIODICA. IL SOTTOSCRIVENTE SI IMPEGNA A RESTITUIRE I BENI CHE GLI SONO STATI CONSEGNATI. IN CASO DI DANNEGGIAMENTO O DISTRUZIONE DEL BENE IL SOTTOSCRIVENTE SI IMPEGNA A CORRISPONDERE I COSTI DI RIPARAZIONE O DI RIACQUISTO DELLO STESSO. IL SOTTOSCRIVENTE È TENUTO A CONSERVARE E CUSTODIRE LE APPARECCHIATURE AFFIDATEGLI IN NOLEGGIO CON OGNI DILIGENZA. EGLI È TENUTO A RIMBORSARE IL COSTO RELATIVO ALLA ROTTURA O PERDITA DELLE APPARECCHIATURE ANCHE SE CAUSATE DA TERZI, SALVI I CASI DI FORZA MAGGIORE, DA PROVARSI A CURA DEL SOTTOSCRIVENTE STESSO. PER I BENI LOCATI ED IL SERVIZIO OFFERTO È DOVUTO ALLA DITTA PROPONENTE UN CORRISPETTIVO DI:</p>
-            <table class="min-w-full text-center border"><thead class="bg-gray-200"><tr><th class="border p-2">ATTREZZATURA A NOLEGGIO</th><th class="border p-2">CANONE MENSILE UNITARIO</th><th class="border p-2">SOSTITUZIONE</th></tr></thead><tbody><tr><td class="border p-2 text-left uppercase">Coltelleria linea</td><td class="border p-2">€ <input type="text" id="contratto_canone_coltelleria_1" name="contratto_canone_coltelleria_1" class="contratto-input w-20 mx-1"> + IVA</td><td class="border p-2 uppercase">Mensile</td></tr><tr><td class="border p-2 text-left uppercase">Coltelleria linea</td><td class="border p-2">€ <input type="text" id="contratto_canone_coltelleria_2" name="contratto_canone_coltelleria_2" class="contratto-input w-20 mx-1"> + IVA</td><td class="border p-2 uppercase">Mensile</td></tr><tr><td class="border p-2 text-left uppercase">Acciaini</td><td class="border p-2">€ <input type="text" id="contratto_canone_acciai" name="contratto_canone_acciai" class="contratto-input w-20 mx-1"> + IVA</td><td class="border p-2 uppercase">Su richiesta</td></tr></tbody></table>
+            <table class="min-w-full text-center border"><thead class="bg-gray-200"><tr><th class="border p-2">ATTREZZATURA A NOLEGGIO</th><th class="border p-2">CANONE MENSILE UNITARIO</th><th class="border p-2">SOSTITUZIONE</th></tr></thead>
+            <tbody>
+            <tr>
+            <td class="border p-2 text-left uppercase">Coltelleria linea <input type ="text" id="linea_coltelleria_1" name="linea_coltelleria_1" class="linea-input w-20 mx-1"></td>
+            <td class="border p-2">€ <input type="text" id="contratto_canone_coltelleria_1" name="contratto_canone_coltelleria_1" class="contratto-input w-20 mx-1"> + IVA</td>
+            <td class="border p-2 uppercase">Mensile</td></tr>
+            <tr>
+            <td class="border p-2 text-left uppercase">Coltelleria linea <input type ="text" id="linea_coltelleria_2" name="linea_coltelleria_2" class="linea-input w-20 mx-1"></td>
+            <td class="border p-2">€ <input type="text" id="contratto_canone_coltelleria_2" name="contratto_canone_coltelleria_2" class="contratto-input w-20 mx-1"> + IVA</td>
+            <td class="border p-2 uppercase">Mensile</td></tr>
+            <tr>
+            <td class="border p-2 text-left uppercase">Acciaini <input type ="text" id="acciai_1" name="acciai_1" class="acciai-input w-20 mx-1"></td>
+            <td class="border p-2">€ <input type="text" id="contratto_canone_acciai" name="contratto_canone_acciai" class="contratto-input w-20 mx-1"> + IVA</td>
+            <td class="border p-2 uppercase">Su richiesta <input type ="text" id="richiesta1" name="richiesta1" class="richiesta-input w-20 mx-1"></td></tr>
+            <tr>
+            <td class="border p-2 text-left uppercase"> <input type ="text" id="linea_coltelleria_3" name="linea_coltelleria_3" class="linea-input w-20 mx-1"></td>
+            <td class="border p-2">€ <input typer="text" id="contratto_canone_coltelleria_3" name="contratto_canone_coltelleria_3" class="contratto-input w-20 mx-1"> + IVA </td>
+            <td class="border p-2 uppercase">Su richiesta <input type ="text" id="richiesta2" name="richiesta2" class="richiesta-input w-20 mx-1"></td></tr>
+            </tbody></table>
+            
             <p>OGNI 30 GIORNI IL LOCATORE PROVVEDERÀ ALLA FATTURAZIONE DEL CORRISPETTIVO, CHE DOVRÀ ESSERE VERSATO MEDIANTE <input type="text" id="contratto_versato_mediante" name="contratto_versato_mediante" class="contratto-input w-48">IN CASO DI TARDIVO PAGAMENTO DEI CORRISPETTIVI, SARANNO CALCOLATI INTERESSI AL TASSO LEGALE. È FATTO ESPLICITO DIVIETO ALL'UTILIZZATORE DI SUBLOCARE IL BENE IN OGGETTO DEL PRESENTE CONTRATTO. IN CASO DI MANCATO PAGAMENTO, O DI VIOLAZIONE ANCHE DI UNO SOLO DEGLI OBBLIGHI PREVISTI A CARICO DEL SOTTOSCRIVENTE, IL PROPONENTE AVRÀ FACOLTÀ DI RISOLVERE IL NOLEGGIO E CHIEDERE LA RESTITUZIONE DEL BENE. IN TAL CASO IL PROPONENTE AVRÀ L'OBBLIGO DI RESTITUIRE I BENI CONCESSI IN LOCAZIONE, E SARÀ TENUTO A CORRISPONDERE AL PROPONENTE, OLTRE AL PREZZO, LE RELATIVE INDENNITÀ DI MORA, ED EVENTUALI RIMBORSI.</p>
         </div>
         <div class="space-y-2 pl-4">
@@ -818,6 +837,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
