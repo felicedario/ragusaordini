@@ -2,7 +2,7 @@
 // CONFIGURAZIONE
 // ==========================================================
 // !! IMPORTANTE !! Sostituisci questa stringa con l'URL della tua Web App
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbx6mJcUuikqMixIf9lAvwIer-Lf_u30ltkuvcASDsIOJ_RiYO9M4yJLas1DhWD0gNeX/exec'; // <-- SOSTITUISCI QUESTO
+const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwfjwvsEFlKWX9K1cyRlVMfbIxtLcYBJkYYL-bYQelYVXJIH44T0hdwrhF6G2muiOcA/exec'; // <-- SOSTITUISCI QUESTO
 
 const DB_NAME = 'RagusaOrdiniDB';
 const DB_VERSION = 1;
@@ -501,13 +501,13 @@ function generateContractHtml(data) {
             <td class="border p-2">€ <input type="text" id="contratto_canone_coltelleria_2" name="contratto_canone_coltelleria_2" class="contratto-input w-20 mx-1"> + IVA</td>
             <td class="border p-2 uppercase">Mensile</td></tr>
             <tr>
-            <td class="border p-2 text-left uppercase">Acciaini <input type ="text" id="acciai_1" name="acciai_1" class="acciai-input w-20 mx-1"></td>
-            <td class="border p-2">€ <input type="text" id="contratto_canone_acciai" name="contratto_canone_acciai" class="contratto-input w-20 mx-1"> + IVA</td>
-            <td class="border p-2 uppercase">Su richiesta <input type ="text" id="richiesta1" name="richiesta1" class="richiesta-input w-20 mx-1"></td></tr>
+            <td class="border p-2 text-left uppercase">Acciaini <input type ="text" id="acciaini_1" name="acciaini_1" class="acciaini-input w-20 mx-1"></td>
+            <td class="border p-2">€ <input type="text" id="contratto_canone_acciaini" name="contratto_canone_acciaini" class="contratto-input w-20 mx-1"> + IVA</td>
+            <td class="border p-2 uppercase">Su richiesta <input type ="text" id="richiesta_1" name="richiesta_1" class="richiesta-input w-20 mx-1"></td></tr>
             <tr>
             <td class="border p-2 text-left uppercase"> <input type ="text" id="linea_coltelleria_3" name="linea_coltelleria_3" class="linea-input w-20 mx-1"></td>
             <td class="border p-2">€ <input type="text" id="contratto_canone_coltelleria_3" name="contratto_canone_coltelleria_3" class="contratto-input w-20 mx-1"> + IVA </td>
-            <td class="border p-2 uppercase">Su richiesta <input type ="text" id="richiesta2" name="richiesta2" class="richiesta-input w-20 mx-1"></td></tr>
+            <td class="border p-2 uppercase">Su richiesta <input type ="text" id="richiesta_2" name="richiesta_2" class="richiesta-input w-20 mx-1"></td></tr>
             </tbody></table>
             
             <p>OGNI 30 GIORNI IL LOCATORE PROVVEDERÀ ALLA FATTURAZIONE DEL CORRISPETTIVO, CHE DOVRÀ ESSERE VERSATO MEDIANTE <input type="text" id="contratto_versato_mediante" name="contratto_versato_mediante" class="contratto-input w-48">IN CASO DI TARDIVO PAGAMENTO DEI CORRISPETTIVI, SARANNO CALCOLATI INTERESSI AL TASSO LEGALE. È FATTO ESPLICITO DIVIETO ALL'UTILIZZATORE DI SUBLOCARE IL BENE IN OGGETTO DEL PRESENTE CONTRATTO. IN CASO DI MANCATO PAGAMENTO, O DI VIOLAZIONE ANCHE DI UNO SOLO DEGLI OBBLIGHI PREVISTI A CARICO DEL SOTTOSCRIVENTE, IL PROPONENTE AVRÀ FACOLTÀ DI RISOLVERE IL NOLEGGIO E CHIEDERE LA RESTITUZIONE DEL BENE. IN TAL CASO IL PROPONENTE AVRÀ L'OBBLIGO DI RESTITUIRE I BENI CONCESSI IN LOCAZIONE, E SARÀ TENUTO A CORRISPONDERE AL PROPONENTE, OLTRE AL PREZZO, LE RELATIVE INDENNITÀ DI MORA, ED EVENTUALI RIMBORSI.</p>
@@ -770,9 +770,16 @@ async function handleFormSubmit(e) {
             domicilioProvincia: document.getElementById('contratto_domicilio_provincia').value,
             pIva: document.getElementById('contratto_partita_iva').value,
             codiceFiscale: document.getElementById('contratto_codice_fiscale').value,
+                lineacoltelleria1: document. getElementById('linea_coltelleria_1').value,
+            lineacoltelleria2: document. getElementById('linea_coltelleria_2').value,
+            lineacoltelleria3: document. getElementById('linea_coltelleria_3').value,
+                acciaini1: document. getElementById('acciaini_1').value,
             canoneColtelleria1: document.getElementById('contratto_canone_coltelleria_1').value,
             canoneColtelleria2: document.getElementById('contratto_canone_coltelleria_2').value,
-            canoneAcciai: document.getElementById('contratto_canone_acciai').value,
+                canoneColtelleria3: document .getElementById('contratto_canone_coltelleria3').value,
+            canoneAcciaini: document.getElementById('contratto_canone_acciaini').value,
+                richiesta1: document. getElementById('richiesta_1').value,
+                richiesta2: document. getElementById('richiesta_2').value,
             versatoMediante: document.getElementById('contratto_versato_mediante').value,
             cadenzaPiallatura: document.getElementById('contratto_cadenza_piallatura').value,
             prezzoPiallatura: document.getElementById('contratto_prezzo_piallatura').value,
@@ -837,6 +844,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
