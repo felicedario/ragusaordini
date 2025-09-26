@@ -506,7 +506,7 @@ function generateContractHtml(data) {
             <td class="border p-2 uppercase">Su richiesta <input type ="text" id="richiesta1" name="richiesta1" class="richiesta-input w-20 mx-1"></td></tr>
             <tr>
             <td class="border p-2 text-left uppercase"> <input type ="text" id="linea_coltelleria_3" name="linea_coltelleria_3" class="linea-input w-20 mx-1"></td>
-            <td class="border p-2">€ <input typer="text" id="contratto_canone_coltelleria_3" name="contratto_canone_coltelleria_3" class="contratto-input w-20 mx-1"> + IVA </td>
+            <td class="border p-2">€ <input type="text" id="contratto_canone_coltelleria_3" name="contratto_canone_coltelleria_3" class="contratto-input w-20 mx-1"> + IVA </td>
             <td class="border p-2 uppercase">Su richiesta <input type ="text" id="richiesta2" name="richiesta2" class="richiesta-input w-20 mx-1"></td></tr>
             </tbody></table>
             
@@ -837,6 +837,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
