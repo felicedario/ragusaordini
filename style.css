@@ -193,7 +193,7 @@ body {
 
 @media (max-width: 768px) {
   .container { padding: 1.5rem; margin: 1rem; }
-  table { display: block; overflow-x: auto; white-space: nowrap; }
+  /* La riga per la tabella è stata rimossa */
   thead, tbody, th, td, tr { display: table-row; }
   th, td { min-width: 70px; }
   td img { width: 50px; height: 50px; }
