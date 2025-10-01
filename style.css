@@ -183,18 +183,5 @@ body {
 
 
 
-    /* Responsive adjustments */
-    @media (max-width: 1024px) {
-      .container { max-width: 95%; }
-      th, td { padding: 0.6rem 0.4rem; font-size: 0.8rem; }
-      td img { width: 60px; height: 60px; }
-      input[type="number"] { padding: 0.4rem; }
-   
+  
 
-@media (max-width: 860px) {
-  .container { padding: 1.5rem; margin: 1rem; }
-  table { display: block; overflow-x: auto; white-space: nowrap; } /* <-- PROBLEMA */
-  thead, tbody, th, td, tr { display: table-row; }
-  th, td { min-width: 70px; }
-  td img { width: 50px; height: 50px; }
-}
