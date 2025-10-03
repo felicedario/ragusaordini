@@ -5,9 +5,10 @@
 const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwi2Iurg0JlJjOOUHbkQXnVfqGYENHlT4-p6VTPTgtcEFKvXClcn6P3b-k75x8Nagbk/exec'; // <-- SOSTITUISCI QUESTO
 
 const DB_NAME = 'RagusaOrdiniDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const DATA_STORE_NAME = 'appData';
 const FORM_STORE_NAME = 'formState';
+const PROFILES_STORE_NAME = 'clientProfiles'; // <-- NUOVO
 
 
 // ==========================================================
@@ -25,6 +26,10 @@ async function openDB() {
             }
             if (!db.objectStoreNames.contains(FORM_STORE_NAME)) {
                 db.createObjectStore(FORM_STORE_NAME);
+            }
+            // NUOVA LOGICA
+            if (!db.objectStoreNames.contains(PROFILES_STORE_NAME)) {
+                db.createObjectStore(PROFILES_STORE_NAME); 
             }
         },
     });
@@ -107,6 +112,18 @@ async function renderApp(data) {
    
     appContent.innerHTML = `
         <h1 class="text-2xl font-bold uppercase">Modulo d'Ordine – Coltelleria Ragusa Srl</h1>
+
+<div id="client-profile-section" class="bg-gray-100 p-4 rounded-lg mb-6 border">
+            <h2 class="text-lg font-bold mb-2 text-center">Gestione Clienti</h2>
+            <div class="flex items-center gap-4">
+                <select id="client-selector" class="flex-grow">
+                    <option value="">Seleziona un cliente per caricare i dati...</option>
+                </select>
+                <button type="button" id="saveClientButton" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg">SALVA</button>
+                <button type="button" id="deleteClientButton" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg">ELIMINA</button>
+            </div>
+        </div>
+        
         <div class="flex justify-center my-4">
             <button type="button" id="force-sync" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 mr-4">
                 AGGIORNA DATI
@@ -550,6 +567,95 @@ function generateContractHtml(data) {
 // ==========================================================
 // GESTIONE EVENTI, STATO FORM E INVIO
 // ==========================================================
+async function populateClientSelector() {
+    const selector = document.getElementById('client-selector');
+    selector.innerHTML = '<option value="">Seleziona un cliente per caricare i dati...</option>'; // Reset
+    const db = await openDB();
+    const clientKeys = await db.getAllKeys(PROFILES_STORE_NAME);
+    clientKeys.sort().forEach(key => {
+        const option = new Option(key, key);
+        selector.add(option);
+    });
+}
+
+////////////////
+
+async function saveClientProfile() {
+    const clientName = prompt("Inserisci il nome da salvare per questo cliente (es. Supermercato Rossi):");
+    if (!clientName || clientName.trim() === '') {
+        alert("Nome non valido. Salvataggio annullato.");
+        return;
+    }
+
+    const profileData = {
+        // Dati Generali
+        puntoVendita: document.getElementById('puntoVendita').value,
+        recipientEmail: document.getElementById('recipientEmail').value,
+        orari: document.getElementById('orari').value,
+        chiusura: document.getElementById('chiusura').value,
+        via: document.getElementById('via').value,
+        citta: document.getElementById('citta').value,
+        // Dati Contratto
+        contratto_societa_ditta: document.getElementById('contratto_societa_ditta').value,
+        contratto_legale_rappresentante: document.getElementById('contratto_legale_rappresentante').value,
+        contratto_data_nascita: document.getElementById('contratto_data_nascita').value,
+        // ... Aggiungi qui TUTTI gli altri campi del contratto che vuoi salvare ...
+        contratto_partita_iva: document.getElementById('contratto_partita_iva').value,
+        contratto_codice_fiscale: document.getElementById('contratto_codice_fiscale').value,
+    };
+
+    const db = await openDB();
+    await db.put(PROFILES_STORE_NAME, profileData, clientName.trim());
+
+    await populateClientSelector(); // Aggiorna il menu a tendina
+    showMessage(`Profilo "${clientName.trim()}" salvato con successo!`, 'success');
+}
+
+///////////////
+
+async function loadClientProfile() {
+    const clientName = document.getElementById('client-selector').value;
+    if (!clientName) return;
+
+    const db = await openDB();
+    const profileData = await db.get(PROFILES_STORE_NAME, clientName);
+
+    if (profileData) {
+        // Popola Dati Generali
+        document.getElementById('puntoVendita').value = profileData.puntoVendita || '';
+        document.getElementById('recipientEmail').value = profileData.recipientEmail || '';
+        document.getElementById('orari').value = profileData.orari || '';
+        document.getElementById('chiusura').value = profileData.chiusura || '';
+        document.getElementById('via').value = profileData.via || '';
+        document.getElementById('citta').value = profileData.citta || '';
+        // Popola Dati Contratto
+        document.getElementById('contratto_societa_ditta').value = profileData.contratto_societa_ditta || '';
+        document.getElementById('contratto_legale_rappresentante').value = profileData.contratto_legale_rappresentante || '';
+        // ... Aggiungi qui TUTTI gli altri campi per popolarli ...
+
+        showMessage(`Dati di "${clientName}" caricati.`, 'success');
+    }
+}
+
+//////////////
+
+async function deleteClientProfile() {
+    const clientName = document.getElementById('client-selector').value;
+    if (!clientName) {
+        alert("Seleziona un cliente da eliminare.");
+        return;
+    }
+
+    if (confirm(`Sei sicuro di voler eliminare il profilo di "${clientName}"? L'operazione è irreversibile.`)) {
+        const db = await openDB();
+        await db.delete(PROFILES_STORE_NAME, clientName);
+        await populateClientSelector(); // Aggiorna il menu
+        showMessage(`Profilo "${clientName}" eliminato.`, 'success');
+    }
+}
+
+//////////
+
 async function setupEventListeners() {
     const form = document.getElementById('orderForm');
 
@@ -578,7 +684,17 @@ async function setupEventListeners() {
         await fetchAndSyncData();
         window.location.reload(); // Ricarica per applicare i nuovi dati
     });
+//////
+    // NUOVA LOGICA EVENTI
+    document.getElementById('saveClientButton').addEventListener('click', saveClientProfile);
+    document.getElementById('deleteClientButton').addEventListener('click', deleteClientProfile);
+    document.getElementById('client-selector').addEventListener('change', loadClientProfile);
 
+    // Carica lo stato del modulo e popola il selettore
+    await loadFormState();
+    await populateClientSelector(); // Popola il menu all'avvio
+}
+////
     // Setup Signature Pad
    // ... dentro setupEventListeners
 const canvas = document.getElementById('signature-canvas');
@@ -847,6 +963,7 @@ function hideLoading() {
     btn.querySelector('#buttonText').style.display = 'inline-block';
     btn.querySelector('#loadingSpinner').style.display = 'none';
 }
+
 
 
 
