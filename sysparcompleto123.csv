@@ -1,0 +1,19 @@
+parametro,valore,descrizione
+IPS_ACTIVE,,Abilita il sistema di stampa remota ICT Print System
+IPS_SERVER_URL,,URL del server IPS per la stampa remota (es: http://localhost:8180/ips/eggs)
+IPS_ENABLED_{nomeServletDelReport},,Abilita un report specifico per la stampa remota
+obblTabTipoDocAllegato,,Rende obbligatorio il campo Tipo documento nel sistema
+parEnabledSectionSicurezzaPrdStab,,Abilita la sezione di sicurezza nel modulo produzione
+printerDoc,,Stampante predefinita per l'utente (usa @username per specificare l'utente)
+abilitaDdtCustom,,Abilita DDT personalizzato per Trade
+usaTurnoSuRigaOrdine,,Usa il turno sulla riga ordine (default true)
+tipoDdtClienteIccaTrade,,Tipo DDT cliente IccaTrade
+magazziniTradeEsclusi,,Magazzini da escludere in Trade (separati da ;)
+clientiTradeTransfer,,Clienti per trasferimento Trade (separati da ;)
+tipiDdtTradeTransfer,,Tipi DDT per trasferimento Trade (separati da ;)
+fornitoreIccaTrade,,Fornitore IccaTrade
+fornitoreAbitualeIcca,,Fornitore abituale ICCA
+tipoRicmerIcca,,Tipo richiesta merci ICCA
+FunzioniP.getNumeroRecordPerPagina,,Numero di record per pagina nelle liste
+AppValues.isFunctionProfileSystemActive,,Attiva il sistema di profili funzione
+SysParUtil.getInstance,,Istanza singleton per gestire i parametri di sistema
